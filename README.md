@@ -58,10 +58,11 @@ minimarket-laravel/
 Buat database MySQL terlebih dahulu:
 
 sql
+```bash
 CREATE DATABASE minimarket_pos_system
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
-
+```
 ---
 
 ## ⚙️ Environment Configuration
