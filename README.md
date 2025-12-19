@@ -28,7 +28,7 @@ Project ini dikembangkan dengan pendekatan **Clean Architecture** dan **RESTful 
 ---
 
 ## 📂 Project Structure (Simplified)
-
+```bash
 minimarket-laravel/
 ├── app/
 │ ├── Http/
@@ -50,7 +50,7 @@ minimarket-laravel/
 │ └── Unit
 ├── .env.example
 └── README.md
-
+```
 ---
 
 ## 🗄️ Database Setup
