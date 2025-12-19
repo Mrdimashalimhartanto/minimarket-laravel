@@ -65,13 +65,14 @@ CREATE DATABASE minimarket_pos_system
 ---
 
 ## ⚙️ Environment Configuration
+```bash
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3307
 DB_DATABASE=minimarket_pos_system
 DB_USERNAME=minimarket_user
 DB_PASSWORD=passwordku123
-
+```
 ---
 
 📦 Install Dependency & Generate Key
@@ -81,6 +82,7 @@ php artisan migrate
 ---
 
 🐳 Docker Compose Setup (MinIO)
+```bash
 version: "3.9"
 
 services:
@@ -100,3 +102,4 @@ services:
 
 volumes:
   db_data:
+```
