@@ -31,25 +31,31 @@ Project ini dikembangkan dengan pendekatan **Clean Architecture** dan **RESTful 
 
 minimarket-laravel/
 ├── app/
-│ ├── Http/
-│ │ ├── Controllers/
-│ │ │ └── Api/V1
-│ │ ├── Requests
-│ │ └── Resources
-│ ├── Models
-│ ├── Services
-│ └── Support
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   └── Api/
+│   │   │       └── V1/
+│   │   ├── Requests/
+│   │   └── Resources/
+│   ├── Models/
+│   ├── Services/
+│   └── Support/
+│
 ├── database/
-│ ├── migrations
-│ └── seeders
+│   ├── migrations/
+│   └── seeders/
+│
 ├── routes/
-│ ├── api.php
-│ └── web.php
+│   ├── api.php
+│   └── web.php
+│
 ├── tests/
-│ ├── Feature
-│ └── Unit
+│   ├── Feature/
+│   └── Unit/
+│
 ├── .env.example
 └── README.md
+
 
 
 ---
