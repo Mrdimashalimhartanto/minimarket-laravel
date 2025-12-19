@@ -77,9 +77,11 @@ DB_PASSWORD=passwordku123
 ---
 
 📦 Install Dependency & Generate Key
+```bash
 composer install
 php artisan key:generate
 php artisan migrate
+```
 ---
 
 🐳 Docker Compose Setup (MinIO)
