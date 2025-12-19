@@ -30,31 +30,143 @@ Project ini dikembangkan dengan pendekatan **Clean Architecture** dan **RESTful 
 ## 📂 Project Structure (Simplified)
 
 minimarket-laravel/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   └── Api/
-│   │   │       └── V1/
-│   │   ├── Requests/
-│   │   └── Resources/
-│   ├── Models/
-│   ├── Services/
-│   └── Support/
-│
-├── database/
-│   ├── migrations/
-│   └── seeders/
-│
-├── routes/
-│   ├── api.php
-│   └── web.php
-│
-├── tests/
-│   ├── Feature/
-│   └── Unit/
-│
-├── .env.example
-└── README.md
+📦app
+ ┣ 📂Actions
+ ┃ ┣ 📂Auth
+ ┃ ┗ 📂Inventory
+ ┣ 📂Enums
+ ┃ ┣ 📜InventoryMovementType.php
+ ┃ ┣ 📜PaymentMethod.php
+ ┃ ┗ 📜ProductStatus.php
+ ┣ 📂Filament
+ ┃ ┗ 📂Resources
+ ┃ ┃ ┣ 📂CategoryResource
+ ┃ ┃ ┃ ┗ 📂Pages
+ ┃ ┃ ┃ ┃ ┣ 📜CreateCategory.php
+ ┃ ┃ ┃ ┃ ┣ 📜EditCategory.php
+ ┃ ┃ ┃ ┃ ┗ 📜ListCategories.php
+ ┃ ┃ ┣ 📂InventoryMovementResource
+ ┃ ┃ ┃ ┗ 📂Pages
+ ┃ ┃ ┃ ┃ ┣ 📜CreateInventoryMovement.php
+ ┃ ┃ ┃ ┃ ┣ 📜EditInventoryMovement.php
+ ┃ ┃ ┃ ┃ ┗ 📜ListInventoryMovements.php
+ ┃ ┃ ┣ 📂ProductResource
+ ┃ ┃ ┃ ┗ 📂Pages
+ ┃ ┃ ┃ ┃ ┣ 📜CreateProduct.php
+ ┃ ┃ ┃ ┃ ┣ 📜EditProduct.php
+ ┃ ┃ ┃ ┃ ┗ 📜ListProducts.php
+ ┃ ┃ ┣ 📂PurchaseOrderResource
+ ┃ ┃ ┃ ┗ 📂Pages
+ ┃ ┃ ┃ ┃ ┣ 📜CreatePurchaseOrder.php
+ ┃ ┃ ┃ ┃ ┣ 📜EditPurchaseOrder.php
+ ┃ ┃ ┃ ┃ ┗ 📜ListPurchaseOrders.php
+ ┃ ┃ ┣ 📂SaleResource
+ ┃ ┃ ┃ ┣ 📂Pages
+ ┃ ┃ ┃ ┃ ┣ 📜CreateSale.php
+ ┃ ┃ ┃ ┃ ┣ 📜EditSale.php
+ ┃ ┃ ┃ ┃ ┗ 📜ListSales.php
+ ┃ ┃ ┃ ┗ 📂RelationManagers
+ ┃ ┃ ┃ ┃ ┗ 📜ItemsRelationManager.php
+ ┃ ┃ ┣ 📂SupplierResource
+ ┃ ┃ ┃ ┣ 📂Pages
+ ┃ ┃ ┃ ┃ ┣ 📜CreateSupplier.php
+ ┃ ┃ ┃ ┃ ┣ 📜EditSupplier.php
+ ┃ ┃ ┃ ┃ ┗ 📜ListSuppliers.php
+ ┃ ┃ ┃ ┗ 📂RelationManagers
+ ┃ ┃ ┃ ┃ ┗ 📜PurchaseOrderRelationManager.php
+ ┃ ┃ ┣ 📜CategoryResource.php
+ ┃ ┃ ┣ 📜InventoryMovementResource.php
+ ┃ ┃ ┣ 📜ProductResource.php
+ ┃ ┃ ┣ 📜PurchaseOrderResource.php
+ ┃ ┃ ┣ 📜SaleResource.php
+ ┃ ┃ ┗ 📜SupplierResource.php
+ ┣ 📂Http
+ ┃ ┣ 📂Controllers
+ ┃ ┃ ┣ 📂Api
+ ┃ ┃ ┃ ┗ 📂V1
+ ┃ ┃ ┃ ┃ ┣ 📂Auth
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthController.php
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜GoogleAuthController.php
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜TwoFactorController.php
+ ┃ ┃ ┃ ┃ ┣ 📜CategoryController.php
+ ┃ ┃ ┃ ┃ ┣ 📜InventoryController.php
+ ┃ ┃ ┃ ┃ ┣ 📜PosController.php
+ ┃ ┃ ┃ ┃ ┣ 📜ProductController.php
+ ┃ ┃ ┃ ┃ ┣ 📜PurchaseOrderController.php
+ ┃ ┃ ┃ ┃ ┗ 📜SupplierController.php
+ ┃ ┃ ┗ 📜Controller.php
+ ┃ ┣ 📂Middleware
+ ┃ ┃ ┗ 📜EnsureTwoFactorEnabled.php
+ ┃ ┗ 📂Requests
+ ┃ ┃ ┣ 📂Auth
+ ┃ ┃ ┃ ┣ 📜GoogleLoginRequest.php
+ ┃ ┃ ┃ ┣ 📜LoginRequest.php
+ ┃ ┃ ┃ ┣ 📜RegisterRequest.php
+ ┃ ┃ ┃ ┗ 📜VerifyTwoFactorRequest.php
+ ┃ ┃ ┣ 📂Category
+ ┃ ┃ ┃ ┣ 📜StoreCategoryRequest.php
+ ┃ ┃ ┃ ┗ 📜UpdateCategoryRequest.php
+ ┃ ┃ ┣ 📂Inventory
+ ┃ ┃ ┃ ┣ 📜AdjustStockRequest.php
+ ┃ ┃ ┃ ┗ 📜MovementFilterRequest.php
+ ┃ ┃ ┣ 📂Pos
+ ┃ ┃ ┃ ┣ 📜StoreSaleRequest.php
+ ┃ ┃ ┃ ┗ 📜UpdateSaleRequest.php
+ ┃ ┃ ┣ 📂Product
+ ┃ ┃ ┃ ┣ 📜StoreProductRequest.php
+ ┃ ┃ ┃ ┗ 📜UpdateProductRequest.php
+ ┃ ┃ ┣ 📂PurchaseOrder
+ ┃ ┃ ┃ ┣ 📜ReceivePurchaseOrderRequest.php
+ ┃ ┃ ┃ ┣ 📜StorePurchaseOrderRequest.php
+ ┃ ┃ ┃ ┗ 📜UpdatePurchaseOrderRequest.php
+ ┃ ┃ ┗ 📂Supplier
+ ┃ ┃ ┃ ┣ 📜StoreSupplierRequest.php
+ ┃ ┃ ┃ ┗ 📜UpdateSupplierRequest.php
+ ┣ 📂Models
+ ┃ ┣ 📜Category.php
+ ┃ ┣ 📜InventoryAdjustment.php
+ ┃ ┣ 📜InventoryMovement.php
+ ┃ ┣ 📜Product.php
+ ┃ ┣ 📜ProductImage.php
+ ┃ ┣ 📜PurchaseOrder.php
+ ┃ ┣ 📜PurchaseOrderItem.php
+ ┃ ┣ 📜Sale.php
+ ┃ ┣ 📜SaleItem.php
+ ┃ ┣ 📜Supplier.php
+ ┃ ┣ 📜TwoFactorCode.php
+ ┃ ┗ 📜User.php
+ ┣ 📂Providers
+ ┃ ┣ 📂Filament
+ ┃ ┃ ┗ 📜AdminPanelProvider.php
+ ┃ ┗ 📜AppServiceProvider.php
+ ┣ 📂Repositories
+ ┃ ┣ 📂Contracts
+ ┃ ┃ ┣ 📜InventoryMovementRepository.php
+ ┃ ┃ ┗ 📜ProductStockRepository.php
+ ┃ ┣ 📂Eloquent
+ ┃ ┃ ┣ 📜InventoryMovementEloquentRepository.php
+ ┃ ┃ ┗ 📜ProductStockEloquentRepository.php
+ ┃ ┣ 📜InventoryRepository.php
+ ┃ ┣ 📜ProductRepository.php
+ ┃ ┣ 📜PurchaseOrderRepository.php
+ ┃ ┣ 📜SaleRepository.php
+ ┃ ┗ 📜SupplierRepository.php
+ ┣ 📂Services
+ ┃ ┣ 📜AuthService.php
+ ┃ ┣ 📜CategoryService.php
+ ┃ ┣ 📜ImageStorageService.php
+ ┃ ┣ 📜InventoryService.php
+ ┃ ┣ 📜PosService.php
+ ┃ ┣ 📜ProductService.php
+ ┃ ┣ 📜PurchaseOrderService.php
+ ┃ ┗ 📜SupplierService.php
+ ┗ 📂Support
+ ┃ ┣ 📜ApiResponse.php
+ ┃ ┣ 📜CacheKey.php
+ ┃ ┣ 📜CacheVersion.php
+ ┃ ┣ 📜EnumHelper.php
+ ┃ ┣ 📜ImagePath.php
+ ┃ ┗ 📜TwoFactor.php
 
 
 
