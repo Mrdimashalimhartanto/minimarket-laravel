@@ -1,59 +1,78 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏪 Minimarket POS System (Laravel Backend)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Minimarket POS System adalah aplikasi backend berbasis **Laravel** yang dirancang untuk mengelola operasional minimarket secara terstruktur dan efisien.  
+Sistem ini mencakup pengelolaan **produk, kategori, stok/inventory, supplier, purchase order**, serta integrasi **object storage (MinIO)** untuk manajemen gambar produk.
 
-## About Laravel
+Project ini dikembangkan dengan pendekatan **clean architecture**, RESTful API, dan siap diintegrasikan dengan **frontend web maupun mobile (Flutter)**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Tech Stack
+- **Framework**: Laravel 12
+- **Language**: PHP 8.2+
+- **Database**: MySQL
+- **Admin Panel**: Filament v3
+- **Storage**: MinIO (S3 Compatible)
+- **Authentication**: Laravel Sanctum
+- **Testing**: PHPUnit
+- **Containerization**: Docker 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📂 Project Structure (Simplified)
+minimarket-laravel/
+├── app/
+│ ├── Http/
+│ │ ├── Controllers/Api/V1
+│ │ ├── Requests
+│ │ └── Resources
+│ ├── Models
+│ ├── Services
+│ └── Support
+├── database/
+│ ├── migrations
+│ └── seeders
+├── routes/
+│ ├── api.php
+│ └── web.php
+├── tests/
+│ ├── Feature
+│ └── Unit
+├── .env.example
+└── README.md
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## DATABASE SETUP 
+- CREATE DATABASE minimarket_pos_system
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## KONFIGURASI ENV
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3307
+DB_DATABASE=minimarket_pos_system
+DB_USERNAME=minimarket_user
+DB_PASSWORD=passwordku123
 
-## Laravel Sponsors
+## Install Dependency & Generate Key
+- composer install
+- php artisan key:generate
+- php artisan migrate
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Docker compose setup
+version: "3.9"
 
-### Premium Partners
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minimarket_minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --address ":9000" --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./storage/minio-data:/data
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+volumes:
+  db_data:
