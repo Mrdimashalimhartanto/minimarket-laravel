@@ -19,10 +19,10 @@ class SaleItem extends Model
     ];
 
     protected $casts = [
-        'quantity'   => 'integer',
+        'quantity' => 'integer',
         'unit_price' => 'decimal:2',
-        'discount'   => 'decimal:2',
-        'subtotal'   => 'decimal:2',
+        'discount' => 'decimal:2',
+        'subtotal' => 'decimal:2',
     ];
 
     public function sale()
@@ -37,34 +37,39 @@ class SaleItem extends Model
 
     protected static function booted()
     {
-        // Hitung subtotal tiap kali item disimpan
+
         static::saving(function (SaleItem $item) {
-            $qty      = (int) ($item->quantity ?? 0);
-            $price    = (float) ($item->unit_price ?? 0);
+            $qty = (int) ($item->quantity ?? 0);
+            $price = (float) ($item->unit_price ?? 0);
             $discount = (float) ($item->discount ?? 0);
 
             $sub = ($qty * $price) - $discount;
 
+
             $item->subtotal = max(0, $sub);
         });
 
+
         $recalculateSale = function (SaleItem $item) {
             $sale = $item->sale;
-            if (!$sale) return;
+            if (!$sale)
+                return;
 
-            // Pastikan relasi benar (items() atau saleItems())
+
             $itemsQuery = method_exists($sale, 'items') ? $sale->items() : $sale->saleItems();
 
             $subTotal = (float) $itemsQuery->sum('subtotal');
-            $saleDiscount = (float) ($sale->total_discount ?? 0);
+            $discount = (float) ($sale->total_discount ?? 0);
             $paid = (float) ($sale->paid_amount ?? 0);
 
-            // total_amount sesuai nama kolom di tabel sales
-            $totalAmount = max(0, $subTotal - $saleDiscount);
+
+            $totalAmount = max(0, $subTotal - $discount);
+
+
             $change = max(0, $paid - $totalAmount);
 
             $sale->forceFill([
-                'total_amount'  => $totalAmount,
+                'total_amount' => $totalAmount,
                 'change_amount' => $change,
             ])->saveQuietly();
         };
